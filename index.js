@@ -9,6 +9,11 @@ function checkData(data) {
   // Якщо об'єкт не пустий повертаємо дані
   // Інакше створюємо помилку,в якості тексту помилки ми використовуємо рядок "Об'єкт пустий".
   // Якщо виникла помилка, повертаємо її повідомлення.
+  if (Object.keys(data.length > 0)) return data;
+  else {
+    const arr = new Error("Об'єкт пустий");
+    return err.massage;
+  }
 }
 
 console.log("Завдання: 1 ==============================");
@@ -30,6 +35,11 @@ function parseJson(jsonStr) {
   // Якщо рядок має невірний формат, виникне помилка, яку ми обробляємо у блоку catch.
   // Повертаємо отриманий об'єкт
   // Якщо виникла помилка, повертаємо її повідомлення.
+  try {
+    return JSON.parse(jsonStr);
+  } catch (error) {
+    return error.message;
+  }
 }
 console.log("Завдання: 2 ==============================");
 
@@ -60,6 +70,16 @@ function getAge(age) {
   // Викидаємо помилку
   // Якщо помилки не має повертаємо рядок `Вік користувача: ${age}`
   // Якщо виникла помилка, повертаємо об'єкт з name та message помилки.
+  try {
+    if (age < 0) {
+      const error = new Error("Вік не може бути менше 0!");
+      error.name = "AgeError";
+      throw error;
+    }
+    return `Вік користувача: ${age}`;
+  } catch (error) {
+    return { name: error.name, error: error.message };
+  }
 }
 console.log("Завдання: 3 ==============================");
 
@@ -83,6 +103,16 @@ function getBookById(books, id) {
   // Якщо книга не знайдена, генерується TypeError з повідомленням Книга з ID ${id} не знайдена!.
   // Повертаємо book
   // Повертаємо текстове представлення помилки
+  try {
+    const book = books.find((book) => book.id === id);
+    if (typeof book !== "object") {
+      const error = new TypeError(`Книга з ID ${id} не знайдена!`);
+      throw error;
+    }
+    return book.title;
+  } catch (error) {
+    return error.toString();
+  }
 }
 console.log("Завдання: 4 ==============================");
 
@@ -122,7 +152,7 @@ function decodeURIComponentWrapper(encodedString) {
   // Спроба декодувати рядок
   // Повертаємо декодований рядок
   // Якщо виникла помилка, і ії назва дорівнює URIError повертаємо помилку про неправильний URI формат з повідомленням Помилка декодування URI,
-  //  інкше повертаємо текстове представлення помилки
+  // інкше повертаємо текстове представлення помилки
 }
 
 console.log("Завдання: 5 ==============================");
